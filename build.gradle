@@ -40,7 +40,7 @@ ext {
   argparseVersion = '0.5.0'
   joptVersion = '4.9'
 
-  slf4jVersion = '1.7.30'
+  slf4jVersion = '1.7.33'
   log4jVersion = '2.17.1'
   junitVersion = '4.12'
   powermockVersion = '1.7.4'
@@ -65,7 +65,7 @@ configurations.all {
 allprojects {
   apply plugin: 'jacoco'
   jacoco {
-    toolVersion = '0.8.1'
+    toolVersion = '0.8.2'
   }
 }
 
@@ -91,7 +91,7 @@ configure(allprojects) { project ->
   apply plugin: 'java'
   apply from: "$gradleScriptDir/setup.gradle"
 
-  sourceCompatibility = targetCompatibility = 1.8
+  sourceCompatibility = targetCompatibility = 11
 
   eclipse.project.natures += 'org.springframework.ide.eclipse.core.springnature'
 
@@ -131,6 +131,8 @@ configure(allprojects) { project ->
     compile "io.projectreactor:reactor-core:$reactorCoreVersion"
 //    compile "org.slf4j:slf4j-api:$slf4jVersion"
 
+    compile group: 'org.mockito', name: 'mockito-core', version: '2.22.0'
+
     testCompileOnly "com.google.code.findbugs:jsr305:$googleJsr305Version"
     testCompile "junit:junit:$junitVersion"
 
@@ -143,6 +145,7 @@ configure(allprojects) { project ->
     testCompile "org.apache.logging.log4j:log4j-slf4j-impl:$log4jVersion"
     // move to compile for 3.0.0 clients
     testCompile "org.slf4j:slf4j-api:$slf4jVersion"
+    testImplementation "org.slf4j:slf4j-nop:$slf4jVersion"
     testCompile "org.testcontainers:kafka:$testcontainersVersion"
     testCompile 'org.awaitility:awaitility:4.0.2'
     testCompile 'org.assertj:assertj-core:3.16.1'
